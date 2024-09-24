@@ -153,3 +153,9 @@ Vector3 Vector3::refract(const Vector3& ray_direction_normalized, const Vector3&
     Vector3 out_parallel = normal * -std::sqrt(std::fabs(1 - out_perpendicular.mod_squared()));
     return out_perpendicular + out_parallel;
 }
+
+Vector3 Vector3::cross_product(const Vector3& rhs) const {
+    return {this->y() * rhs.z() - this->z() * rhs.y(),
+            this->z() * rhs.x() - this->x() * rhs.z(),
+            this->x() * rhs.y() - this->y() * rhs.z()};
+}

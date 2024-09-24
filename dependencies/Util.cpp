@@ -4,10 +4,6 @@
 
 #include "Util.h"
 
-inline double rad(double deg) {
-    return deg * pi / 180.0;
-}
-
 const Range Range::empty = Range(infinity, -infinity);
 
 const Range Range::real = Range(-infinity, infinity);

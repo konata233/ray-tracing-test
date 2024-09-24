@@ -21,7 +21,7 @@ public:
 
     static Vector3 random_scatter();
 
-    Screen(int width, double aspect, int sample, int max_depth, double vp_width, double focal_len,
+    Screen(int width, double aspect, int sample, int max_depth, double vp_width, double vfov_rad,
            const Point3& center);
 
     [[nodiscard]] unsigned char* serialize_all() const;
@@ -34,6 +34,7 @@ protected:
     int max_depth;
     double sample_scale;
     double aspect;
+    double fov;
 
     double viewport_height;
     double viewport_width;

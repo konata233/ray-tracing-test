@@ -6,7 +6,7 @@
 #include "Screen.h"
 #include "Material.h"
 
-Screen::Screen(int width, double aspect, int sample, int max_depth, double vp_width, double focal_len,
+Screen::Screen(int width, double aspect, int sample, int max_depth, double vp_width, double vfov_rad,
                const Point3& center) {
     this->img_width = width;
     this->img_height = int(width / aspect);
@@ -15,10 +15,11 @@ Screen::Screen(int width, double aspect, int sample, int max_depth, double vp_wi
     this->max_depth = max_depth;
     this->aspect = aspect;
 
-    this->viewport_width = vp_width;
-    this->viewport_height = vp_width / aspect;
+    this->focal_length = 1.0;
+    this->fov = vfov_rad;
+    this->viewport_height = std::tan(vfov_rad * 0.5) * 2 * focal_length;
+    this->viewport_width = viewport_height * aspect;
 
-    this->focal_length = focal_len;
     this->center = center;
 
     this->viewport_u = Vector3(this->viewport_width, 0, 0);

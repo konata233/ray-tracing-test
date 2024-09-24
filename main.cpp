@@ -31,7 +31,7 @@ int main() {
     World world = World();
     world.push_back(ground);
     world.push_back(sphere1).push_back(sphere0).push_back(sphere2);//.push_back(std::make_shared<Sphere>(Point3(-1.5, 0.1, -1.0), 0.45, metal));
-    Screen screen = Screen(192, 16.0 / 9.0, 20, 50, 2, 1, Point3(0, 0, 0));
+    Screen screen = Screen(192, 16.0 / 9.0, 20, 50, 2, rad(90), Point3(0, 0, 0));
     screen.render(world);
     auto buffer = screen.serialize_all();
     ImageDevice device = ImageDevice(buffer, 3, 192, 108);

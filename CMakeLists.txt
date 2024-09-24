@@ -23,4 +23,6 @@ add_executable(ray_tracing main.cpp
         dependencies/Util.cpp
         dependencies/Util.h
         dependencies/Material.cpp
-        dependencies/Material.h)
+        dependencies/Material.h
+        dependencies/Camera.cpp
+        dependencies/Camera.h)

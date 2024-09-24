@@ -60,6 +60,8 @@ public:
 
     [[nodiscard]] double dot_product(const Vector3& rhs) const;
 
+    [[nodiscard]] Vector3 cross_product(const Vector3& rhs) const;
+
     [[nodiscard]] bool near_zero() const;
 
     Vector3();

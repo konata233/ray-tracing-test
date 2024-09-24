@@ -12,7 +12,9 @@
 const double infinity = std::numeric_limits<double>::infinity();
 const double pi = 3.14159265358979323857;
 
-inline double rad(double deg);
+inline double rad(double deg) {
+    return deg * pi / 180.0;
+}
 
 class Range {
 public:
