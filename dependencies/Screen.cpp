@@ -48,7 +48,7 @@ Vector3 Screen::random_scatter() {
 
 auto Screen::ray_color(Ray& ray_in, int depth, const World& world) {
     if (depth <= 0) {
-        return Color(1, 1, 1);
+        return Color(0, 0, 0);
     }
     HitContext ctx;
     if (world.hit(ray_in, Range(0.001, infinity), ctx)) {
@@ -60,12 +60,9 @@ auto Screen::ray_color(Ray& ray_in, int depth, const World& world) {
             return Color(0, 0, 0);
         }
     }
-    auto a = (ray_in.dir().normalize().y() + 1) * 0.5;
-    if (a > 1) {
-        a =1;
-        std::cout << "err";
-    }
-    return Color(0, 0, 1) * a + Color(0.2, 0.4, 1) * (1.0 - a);
+    auto a = Range::normalize_pos.clamp((ray_in.dir().normalize().y() + 1) - 0.4);
+    //std::cout << a << std::endl;
+    return Color(1, 1, 1) * (1.0 - a) + Color(0.6, 0.6, 1) * a;
 }
 
 void Screen::render(const World& world) {

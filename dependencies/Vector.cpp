@@ -146,3 +146,10 @@ Vector3 Vector3::reflect(const Vector3& ray_direction, const Vector3& normal) {
 Vector3 Vector3::operator*(const Vector3& rhs) const {
     return {this->x() * rhs.x(), this->y() * rhs.y(), this->z() * rhs.z()};
 }
+
+Vector3 Vector3::refract(const Vector3& ray_direction_normalized, const Vector3& normal, double refraction_idx) {
+    double cos_theta = std::fmin(normal.dot_product(-ray_direction_normalized), 1.0);
+    Vector3 out_perpendicular = (ray_direction_normalized + normal * cos_theta) * refraction_idx;
+    Vector3 out_parallel = normal * -std::sqrt(std::fabs(1 - out_perpendicular.mod_squared()));
+    return out_perpendicular + out_parallel;
+}

@@ -56,6 +56,8 @@ public:
 
     static Vector3 reflect(const Vector3& ray_direction, const Vector3& normal);
 
+    static Vector3 refract(const Vector3& ray_direction, const Vector3& normal, double refraction_idx);
+
     [[nodiscard]] double dot_product(const Vector3& rhs) const;
 
     [[nodiscard]] bool near_zero() const;

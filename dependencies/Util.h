@@ -35,6 +35,10 @@ public:
 
     static const Range real;
 
+    static const Range normalize;
+
+    static const Range normalize_pos;
+
 };
 
 double random_double();

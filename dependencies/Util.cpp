@@ -12,6 +12,10 @@ const Range Range::empty = Range(infinity, -infinity);
 
 const Range Range::real = Range(-infinity, infinity);
 
+const Range Range::normalize = Range(-1, 1);
+
+const Range Range::normalize_pos = Range(0, 1);
+
 Range::Range() {
     min = infinity;
     max = -infinity;
@@ -44,8 +48,9 @@ double Range::clamp(double x) const {
 }
 
 double random_double() {
+    static std::random_device device;
     static std::uniform_real_distribution<double> dist(0.0, 1.0);
-    std::mt19937 gen; // NOLINT(*-msc51-cpp)
+    static std::mt19937 gen(device());
     return dist(gen);
 }
 

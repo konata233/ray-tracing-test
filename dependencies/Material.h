@@ -27,10 +27,23 @@ class Metal : public Material {
 public:
     bool scatter(const Ray& ray_in, const HitContext& ctx, Color& color, Ray& scattered) const override;
 
-    explicit Metal(const Color& albedo);
+    explicit Metal(const Color& albedo, double fuzziness);
 
 protected:
     Color albedo;
+    double fuzziness;
+};
+
+class Dielectric : public Material {
+public:
+    explicit Dielectric(double refraction_index);
+
+    bool scatter(const Ray& ray_in, const HitContext& ctx, Color& color, Ray& scattered) const override;
+
+protected:
+    double refraction_index;
+
+    static double reflectance(double cos_theta, double refraction_idx);
 };
 
 
