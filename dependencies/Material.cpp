@@ -37,7 +37,7 @@ Dielectric::Dielectric(double refraction_index) {
 }
 
 bool Dielectric::scatter(const Ray& ray_in, const HitContext& ctx, Color& color, Ray& scattered) const {
-    double idx = ctx.front_face ? refraction_index : (1 / refraction_index);
+    double idx = !ctx.front_face ? refraction_index : (1 / refraction_index);
     Vector3 normalized = ray_in.dir().normalize();
     double cos_theta = std::min(ctx.normal.dot_product(-normalized), 1.0);
     double sin_theta = std::sqrt(1 - cos_theta * cos_theta);

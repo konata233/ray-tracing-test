@@ -52,6 +52,8 @@ public:
 
     static Vector3 random_unit_vec();
 
+    static Vector3 random_unit_vec2d();
+
     static Vector3 random_with_normal(const Vector3& normal);
 
     static Vector3 reflect(const Vector3& ray_direction, const Vector3& normal);

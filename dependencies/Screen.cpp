@@ -6,8 +6,7 @@
 #include "Screen.h"
 #include "Material.h"
 
-Screen::Screen(int width, double aspect, int sample, int max_depth, double vp_width, double vfov_rad,
-               const Point3& center) {
+Screen::Screen(int width, double aspect, int sample, int max_depth, double vfov_rad, Camera& camera) {
     this->img_width = width;
     this->img_height = int(width / aspect);
     this->sample = sample;
@@ -15,20 +14,27 @@ Screen::Screen(int width, double aspect, int sample, int max_depth, double vp_wi
     this->max_depth = max_depth;
     this->aspect = aspect;
 
-    this->focal_length = 1.0;
+    this->center = camera.look_from;
+    this->focal_length = camera.focal_len;
+    this->defocus_angle = camera.defocus_angle;
+    double defocus_rad = focal_length * std::tan(camera.defocus_angle * 0.5);
+
     this->fov = vfov_rad;
     this->viewport_height = std::tan(vfov_rad * 0.5) * 2 * focal_length;
     this->viewport_width = viewport_height * aspect;
 
-    this->center = center;
+    auto [u, v, w] = camera.get_uvw();
 
-    this->viewport_u = Vector3(this->viewport_width, 0, 0);
-    this->viewport_v = Vector3(0, this->viewport_height, 0);
+    this->defocus_u = u * defocus_rad;
+    this->defocus_v = v * defocus_rad;
+
+    this->viewport_u = u * viewport_width;
+    this->viewport_v = v * viewport_height;
 
     this->u_pixel = viewport_u * (1.0 / this->img_width);
     this->v_pixel = viewport_v * (1.0 / this->img_height);
 
-    this->viewport_origin = this->center - Vector3(0, 0, focal_length) // -look_at!!
+    this->viewport_origin = this->center - (w * focal_length) // -look_at!!
             - viewport_u / 2 - viewport_v / 2;
 
     this->buffer = new Color[img_width * img_height];
@@ -36,10 +42,11 @@ Screen::Screen(int width, double aspect, int sample, int max_depth, double vp_wi
 
 auto Screen::ray_at(int i, int j) {
     auto offset = random_scatter();
+    auto defocus = Vector3::random_unit_vec2d().normalize();
     auto pos = this->viewport_origin + ((u_pixel * (i + offset.x())) + (v_pixel * (j + offset.y())));
     //std::cout << pos.x() << " " << pos.y() << std::endl;
-    auto ray_dir = pos - this->center; // not normalized
-
+    auto ray_dir = pos - (this->defocus_angle <= 0 ? this->center
+            : (this->center + (defocus_u * defocus.x() + defocus_v * defocus.y())));
     return Ray(center, ray_dir);
 }
 

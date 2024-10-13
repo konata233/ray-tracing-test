@@ -157,5 +157,9 @@ Vector3 Vector3::refract(const Vector3& ray_direction_normalized, const Vector3&
 Vector3 Vector3::cross_product(const Vector3& rhs) const {
     return {this->y() * rhs.z() - this->z() * rhs.y(),
             this->z() * rhs.x() - this->x() * rhs.z(),
-            this->x() * rhs.y() - this->y() * rhs.z()};
+            this->x() * rhs.y() - this->y() * rhs.x()};
+}
+
+Vector3 Vector3::random_unit_vec2d() {
+    return {random_double(-1, 1), random_double(-1, 1), 0};
 }

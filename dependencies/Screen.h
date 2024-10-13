@@ -10,6 +10,7 @@
 #include "World.h"
 #include "Util.h"
 #include "Ray.h"
+#include "Camera.h"
 
 class Screen {
 public:
@@ -21,8 +22,7 @@ public:
 
     static Vector3 random_scatter();
 
-    Screen(int width, double aspect, int sample, int max_depth, double vp_width, double vfov_rad,
-           const Point3& center);
+    Screen(int width, double aspect, int sample, int max_depth, double vfov_rad, Camera& camera);
 
     [[nodiscard]] unsigned char* serialize_all() const;
 
@@ -38,7 +38,13 @@ protected:
 
     double viewport_height;
     double viewport_width;
+
     double focal_length;
+    double defocus_angle;
+
+    Vector3 defocus_u;
+    Vector3 defocus_v;
+
     Point3 center;
 
     Vector3 viewport_u;

@@ -42,21 +42,3 @@ double Range::clamp(double x) const {
     }
     return x;
 }
-
-double random_double() {
-    static std::random_device device;
-    static std::uniform_real_distribution<double> dist(0.0, 1.0);
-    static std::mt19937 gen(device());
-    return dist(gen);
-}
-
-double random_double(double min, double max) {
-    return min + random_double() * (max - min);
-}
-
-double gamma_correct(double linear) {
-    if (linear > 0) {
-        return std::sqrt(linear);
-    }
-    return 0;
-}
